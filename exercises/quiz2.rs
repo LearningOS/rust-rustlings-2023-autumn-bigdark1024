@@ -20,8 +20,6 @@
 //
 // No hints this time!
 
-// I AM NOT DONE
-
 pub enum Command {
     Uppercase,
     Trim,
@@ -31,12 +29,33 @@ pub enum Command {
 mod my_module {
     use super::Command;
 
+    // 复用之前string1.rs例子
+    fn trim_me(input: &str) -> String {
+        // TODO: Remove whitespace from both ends of a string!
+        input.trim().to_string()
+    }
+
+    fn generate_bar_str(string: &str, ct: usize) -> String {
+        let mut ret = String::from(string);
+        for _ in 0..ct {
+            ret += "bar";
+        }
+        ret
+    }
+
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    // Vec<(String, Command)> 元组作为入参，生成Vec结构
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = vec![]; // String Vector
         for (string, command) in input.iter() {
             // TODO: Complete the function body. You can do it!
+            let mut uppcase = string.to_uppercase();
+            match command {
+                Command::Uppercase => output.push(uppcase),
+                Command::Trim => output.push(trim_me(&string)),
+                Command::Append(usize) => output.push(generate_bar_str(&string, *usize)),
+            }
         }
         output
     }
@@ -44,8 +63,8 @@ mod my_module {
 
 #[cfg(test)]
 mod tests {
-    // TODO: What do we need to import to have `transformer` in scope?
-    use ???;
+    // 使用my_module::transformer模块
+    use crate::my_module::transformer; // use crate
     use super::Command;
 
     #[test]

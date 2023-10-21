@@ -5,11 +5,12 @@
 // Execute `rustlings hint lifetimes3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
-struct Book {
-    author: &str,
-    title: &str,
+// 'a是一个生命周期参数，它表示某个值在某个范围内的生命周期。
+// 在函数或方法中，当使用引用或Rc等引用类型时，
+// 需要指定生命周期参数。
+struct Book<'a> {
+    author: &'a str,
+    title: &'a str,
 }
 
 fn main() {

@@ -18,11 +18,16 @@
 //
 // Execute `rustlings hint box1` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+// 这是一个非常典型的递归类型问题的例子，你需要使用Box来解决问题。Rust中的Box可以用来在堆上分配内存，这样就可以解决递归类型的问题，因为你可以有一个指向下一个元素（也是相同类型的）的指针。
+
+// 以下是修复你的代码的步骤：
+
+// 首先，我们需要在List枚举类型中添加一个Box。这意味着我们需要把List的定义改为Box<List>。但是，这里有一个问题，Box只能用于存储一种类型，而你的List枚举类型中有两种类型：Cons和Nil。为了解决这个问题，你可以创建一个新的枚举类型，只包含一种类型，然后用Box来存储这个枚举类型。
+
 
 #[derive(PartialEq, Debug)]
 pub enum List {
-    Cons(i32, List),
+    Cons(i32, Box<List>),
     Nil,
 }
 
@@ -35,11 +40,13 @@ fn main() {
 }
 
 pub fn create_empty_list() -> List {
-    todo!()
+    // todo!()
+    List::Nil
 }
 
 pub fn create_non_empty_list() -> List {
-    todo!()
+        let tail = Box::new(List::Nil);
+    List::Cons(42, tail)
 }
 
 #[cfg(test)]
